@@ -14,6 +14,7 @@
             color: #ffffff;
         }
 
+        /* Hover effects for the 2x5 grid only */
         .artist-grid-item {
             aspect-ratio: 1 / 1;
             overflow: hidden;
@@ -38,6 +39,15 @@
         .artist-grid-item:hover {
             box-shadow: 0 0 20px rgba(255,255,255,0.1);
             z-index: 10;
+        }
+
+        /* Static style for Featured Artist images (No Hover) */
+        .featured-artist-img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: grayscale(0%); /* Always color or as uploaded */
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
         .nav-link {
@@ -153,10 +163,10 @@
             <!-- Image Side -->
             <div class="w-full md:w-1/2 order-1 md:order-2">
                 <div class="relative group">
-                    <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
-                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=800&q=80" 
+                    <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10 transition-transform duration-500"></div>
+                    <img src="https://imgur.com/6QTBy1X.jpg" 
                          alt="Zubi Album Cover" 
-                         class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                         class="featured-artist-img">
                 </div>
             </div>
         </div>
@@ -168,11 +178,10 @@
             <!-- Image Side (Left) -->
             <div class="w-full md:w-1/2">
                 <div class="relative group">
-                    <!-- Frame goes to the left/bottom for inverted feel -->
-                    <div class="absolute inset-0 border border-white/20 -translate-x-4 translate-y-4 -z-10 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
-                    <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=800&q=80" 
+                    <div class="absolute inset-0 border border-white/20 -translate-x-4 translate-y-4 -z-10 transition-transform duration-500"></div>
+                    <img src="https://imgur.com/8su9qHC.jpg" 
                          alt="Stiff Buscemi" 
-                         class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                         class="featured-artist-img">
                 </div>
             </div>
 
