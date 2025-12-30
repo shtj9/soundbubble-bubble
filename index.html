@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundbubble Collective</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+        }
+
+        .artist-grid-item {
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            position: relative;
+            background: #1a1a1a;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .artist-grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+
+        .artist-grid-item:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.1);
+        }
+
+        .artist-grid-item:hover {
+            box-shadow: 0 0 20px rgba(255,255,255,0.1);
+            z-index: 10;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: black;
+            border-color: white;
+        }
+
+        .btn-solid {
+            background: white;
+            color: black;
+            transition: all 0.3s ease;
+        }
+
+        .btn-solid:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-xl font-black tracking-tighter uppercase">Soundbubble</div>
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <li><a href="#" class="nav-link text-white">Artists</a></li>
+                <li><a href="#" class="nav-link">Shop</a></li>
+                <li><a href="#" class="nav-link">News</a></li>
+                <li><a href="#" class="nav-link">Gigs</a></li>
+                <li><a href="#" class="nav-link">Radio</a></li>
+                <li><a href="#" class="nav-link">Associates</a></li>
+            </ul>
+            <div class="md:hidden text-white">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-7xl mx-auto px-6 pt-24 pb-16 text-center md:text-left">
+        <h1 class="text-6xl md:text-8xl font-black tracking-tighter mb-6 uppercase leading-none">
+            Soundbubble<br>Collective
+        </h1>
+        <p class="text-xl md:text-2xl text-white/50 max-w-2xl font-light leading-relaxed italic">
+            Kolektiv koji okuplja bendove i umetnike različitih žanrova i estetika
+        </p>
+    </header>
+
+    <!-- Band Grid Section (2x5) -->
+    <section class="max-w-7xl mx-auto px-6 mb-32">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <!-- Row 1 -->
+            <div class="artist-grid-item"><img src="https://imgur.com/riFJ1jg.jpg" alt="Artist 1"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/ke4hFDf.jpg" alt="Artist 2"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/nW1quCI.jpg" alt="Artist 3"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/dMhqCkN.jpg" alt="Artist 4"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/uvbbfLN.jpg" alt="Artist 5"></div>
+            
+            <!-- Row 2 -->
+            <div class="artist-grid-item"><img src="https://imgur.com/ymkZeqK.jpg" alt="Artist 6"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/w0iP2Xv.jpg" alt="Artist 7"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/iIGKadX.jpg" alt="Artist 8"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/bL1nWoI.jpg" alt="Artist 9"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/MHaFa7K.jpg" alt="Artist 10"></div>
+        </div>
+    </section>
+
+    <!-- Featured Artist: Zubi -->
+    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
+        <div class="flex flex-col md:flex-row items-center gap-16">
+            <!-- Info Side -->
+            <div class="w-full md:w-1/2 order-2 md:order-1">
+                <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">Artist Spotlight</span>
+                <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">Zubi</h2>
+                <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
+                    <p>Зуби су настали у журби, без превише размишљања како и у којој форми ће се појавити.</p>
+                    <p>Реакција на акцију, бубањ на тишину, глас на бас, корак по корак и потрчали су пре него што су проходали.</p>
+                </div>
+                
+                <div class="mt-12 flex flex-wrap gap-4">
+                    <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">Instagram</a>
+                    <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Listen to</a>
+                </div>
+            </div>
+
+            <!-- Image Side -->
+            <div class="w-full md:w-1/2 order-1 md:order-2">
+                <div class="relative group">
+                    <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
+                    <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=800&q=80" 
+                         alt="Zubi Album Cover" 
+                         class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Artist: Stiff Buscemi (Inverted) -->
+    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
+        <div class="flex flex-col md:flex-row items-center gap-16">
+            <!-- Image Side (Left) -->
+            <div class="w-full md:w-1/2">
+                <div class="relative group">
+                    <!-- Frame goes to the left/bottom for inverted feel -->
+                    <div class="absolute inset-0 border border-white/20 -translate-x-4 translate-y-4 -z-10 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500"></div>
+                    <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?auto=format&fit=crop&w=800&q=80" 
+                         alt="Stiff Buscemi" 
+                         class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 shadow-2xl">
+                </div>
+            </div>
+
+            <!-- Info Side (Right) -->
+            <div class="w-full md:w-1/2">
+                <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">New Release</span>
+                <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">Stiff Buscemi</h2>
+                <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
+                    <p>Formed in 2018, Stiff Buscemi is an instrumental psychedelic rock band from Novi Sad, Serbia. Inspired by the music of the Balkans, the Middle East and North Africa and highlighted by wah guitars.</p>
+                    <p>Their debut album Jet-Black Highdooks stands out among today's oriental rock in its meticulous production, rich sound, and playful compositions that shift between energetic, unpredictable moments to atmospheric passages.</p>
+                </div>
+                
+                <div class="mt-12 flex flex-wrap gap-4">
+                    <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">Instagram</a>
+                    <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Listen to</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 text-center border-t border-white/10">
+        <p class="text-white/20 text-xs uppercase tracking-[0.5em]">&copy; 2025 Soundbubble Collective</p>
+    </footer>
+
+</body>
+</html>
