@@ -12,15 +12,19 @@
             font-family: 'Inter', sans-serif;
             background-color: #0a0a0a;
             color: #ffffff;
+            overflow-x: hidden;
         }
 
-        /* Hover effects for the 2x5 grid only */
+        /* Hover effects for the grid items */
         .artist-grid-item {
+            width: 200px;
             aspect-ratio: 1 / 1;
             overflow: hidden;
             position: relative;
             background: #1a1a1a;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+            user-select: none;
         }
 
         .artist-grid-item img {
@@ -29,6 +33,7 @@
             object-fit: cover;
             filter: grayscale(100%);
             transition: all 0.5s ease;
+            pointer-events: none;
         }
 
         .artist-grid-item:hover img {
@@ -41,12 +46,24 @@
             z-index: 10;
         }
 
-        /* Static style for Featured Artist images (No Hover) */
+        /* Continuous Scroll Container */
+        .scroll-container {
+            display: flex;
+            width: fit-content;
+            cursor: grab;
+            will-change: transform;
+        }
+        
+        .scroll-container:active {
+            cursor: grabbing;
+        }
+
+        /* Static style for Featured Artist images */
         .featured-artist-img {
             width: 100%;
             height: auto;
             object-fit: cover;
-            filter: grayscale(0%); /* Always color or as uploaded */
+            filter: grayscale(0%);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
@@ -91,6 +108,51 @@
             background: #e0e0e0;
             transform: translateY(-2px);
         }
+
+        /* Carousel Styles */
+        .carousel-item {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .carousel-item.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Progress Bar Styles */
+        .progress-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background: white;
+            transition: width 0.1s linear;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -123,18 +185,28 @@
         </p>
     </header>
 
-    <!-- Band Grid Section (2x5) -->
-    <section class="max-w-7xl mx-auto px-6 mb-32">
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-            <!-- Row 1 -->
+    <!-- Band Grid Section (Movie Track Style with Drag & Drift) -->
+    <section class="mb-32 overflow-hidden scroll-wrapper" id="scroll-wrapper">
+        <div id="drag-container" class="scroll-container flex gap-4">
+            <!-- Original set of 10 artists -->
             <div class="artist-grid-item"><img src="https://imgur.com/riFJ1jg.jpg" alt="Artist 1"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/ke4hFDf.jpg" alt="Artist 2"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/nW1quCI.jpg" alt="Artist 3"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/dMhqCkN.jpg" alt="Artist 4"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/uvbbfLN.jpg" alt="Artist 5"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/ymkZedge.jpg" alt="Artist 6"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/w0iP2Xv.jpg" alt="Artist 7"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/iIGKadX.jpg" alt="Artist 8"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/bL1nWoI.jpg" alt="Artist 9"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/MHaFa7K.jpg" alt="Artist 10"></div>
             
-            <!-- Row 2 -->
-            <div class="artist-grid-item"><img src="https://imgur.com/ymkZeqK.jpg" alt="Artist 6"></div>
+            <!-- Duplicated set for seamless looping -->
+            <div class="artist-grid-item"><img src="https://imgur.com/riFJ1jg.jpg" alt="Artist 1"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/ke4hFDf.jpg" alt="Artist 2"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/nW1quCI.jpg" alt="Artist 3"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/dMhqCkN.jpg" alt="Artist 4"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/uvbbfLN.jpg" alt="Artist 5"></div>
+            <div class="artist-grid-item"><img src="https://imgur.com/ymkZedge.jpg" alt="Artist 6"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/w0iP2Xv.jpg" alt="Artist 7"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/iIGKadX.jpg" alt="Artist 8"></div>
             <div class="artist-grid-item"><img src="https://imgur.com/bL1nWoI.jpg" alt="Artist 9"></div>
@@ -142,63 +214,94 @@
         </div>
     </section>
 
-    <!-- Featured Artist: Zubi -->
-    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
-        <div class="flex flex-col md:flex-row items-center gap-16">
-            <!-- Info Side -->
-            <div class="w-full md:w-1/2 order-2 md:order-1">
-                <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">Artist Spotlight</span>
-                <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">Zubi</h2>
-                <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
-                    <p>Зуби су настали у журби, без превише размишљања како и у којој форми ће се појавити.</p>
-                    <p>Реакција на акцију, бубањ на тишину, глас на бас, корак по корак и потрчали су пре него што су проходали.</p>
-                </div>
-                
-                <div class="mt-12 flex flex-wrap gap-4">
-                    <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">Instagram</a>
-                    <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Listen to</a>
+    <!-- Featured Artists Carousel -->
+    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/10 relative">
+        <div class="absolute right-6 top-10 flex gap-2 z-20">
+            <button onclick="prevSlide()" class="nav-btn p-3 rounded-full text-white">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button onclick="nextSlide()" class="nav-btn p-3 rounded-full text-white">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <div id="carousel-container">
+            <!-- Artist 1: Zubi -->
+            <div class="carousel-item active">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="w-full md:w-1/2 order-2 md:order-1">
+                        <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">Artist Spotlight</span>
+                        <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">Zubi</h2>
+                        <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
+                            <p>Зуби су настали у журби, без превише размишљања како и у којој форми ће се појавити.</p>
+                            <p>Реакција на акцију, бубањ на тишину, глас на бас, корак по корак и потрчали су пре него што су проходали.</p>
+                        </div>
+                        <div class="mt-12 flex flex-wrap gap-4">
+                            <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">Instagram</a>
+                            <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Listen to</a>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 order-1 md:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10"></div>
+                            <img src="https://imgur.com/6QTBy1X.jpg" alt="Zubi" class="featured-artist-img">
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Image Side -->
-            <div class="w-full md:w-1/2 order-1 md:order-2">
-                <div class="relative group">
-                    <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10 transition-transform duration-500"></div>
-                    <img src="https://imgur.com/6QTBy1X.jpg" 
-                         alt="Zubi Album Cover" 
-                         class="featured-artist-img">
+            <!-- Artist 2: Stiff Buscemi -->
+            <div class="carousel-item">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="w-full md:w-1/2 order-2 md:order-1">
+                        <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">New Release</span>
+                        <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">Stiff Buscemi</h2>
+                        <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
+                            <p>Instrumental psychedelic rock band from Novi Sad, Serbia. Inspired by the music of the Balkans, the Middle East and North Africa.</p>
+                            <p>Their debut album Jet-Black Highdooks stands out among today's oriental rock in its meticulous production and rich sound.</p>
+                        </div>
+                        <div class="mt-12 flex flex-wrap gap-4">
+                            <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">Instagram</a>
+                            <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Listen to</a>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 order-1 md:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10"></div>
+                            <img src="https://imgur.com/8su9qHC.jpg" alt="Stiff Buscemi" class="featured-artist-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Artist 3: Placeholder Artist Example -->
+            <div class="carousel-item">
+                <div class="flex flex-col md:flex-row items-center gap-16">
+                    <div class="w-full md:w-1/2 order-2 md:order-1">
+                        <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">Coming Soon</span>
+                        <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">New Voice</h2>
+                        <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
+                            <p>The Soundbubble Collective is constantly evolving, bringing together experimental sounds and visual arts from across the region.</p>
+                            <p>Stay tuned for our upcoming showcase featuring new collaborative projects and underground releases.</p>
+                        </div>
+                        <div class="mt-12 flex flex-wrap gap-4">
+                            <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">News</a>
+                            <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Register</a>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 order-1 md:order-2">
+                        <div class="relative group">
+                            <div class="absolute inset-0 border border-white/20 translate-x-4 translate-y-4 -z-10"></div>
+                            <img src="https://imgur.com/dMhqCkN.jpg" alt="Upcoming" class="featured-artist-img">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Featured Artist: Stiff Buscemi (Inverted) -->
-    <section class="max-w-7xl mx-auto px-6 py-24 border-t border-white/10">
-        <div class="flex flex-col md:flex-row items-center gap-16">
-            <!-- Image Side (Left) -->
-            <div class="w-full md:w-1/2">
-                <div class="relative group">
-                    <div class="absolute inset-0 border border-white/20 -translate-x-4 translate-y-4 -z-10 transition-transform duration-500"></div>
-                    <img src="https://imgur.com/8su9qHC.jpg" 
-                         alt="Stiff Buscemi" 
-                         class="featured-artist-img">
-                </div>
-            </div>
-
-            <!-- Info Side (Right) -->
-            <div class="w-full md:w-1/2">
-                <span class="text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-4 block">New Release</span>
-                <h2 class="text-5xl md:text-7xl font-black uppercase mb-8 tracking-tighter">Stiff Buscemi</h2>
-                <div class="space-y-6 text-lg text-white/70 font-light leading-relaxed max-w-xl">
-                    <p>Formed in 2018, Stiff Buscemi is an instrumental psychedelic rock band from Novi Sad, Serbia. Inspired by the music of the Balkans, the Middle East and North Africa and highlighted by wah guitars.</p>
-                    <p>Their debut album Jet-Black Highdooks stands out among today's oriental rock in its meticulous production, rich sound, and playful compositions that shift between energetic, unpredictable moments to atmospheric passages.</p>
-                </div>
-                
-                <div class="mt-12 flex flex-wrap gap-4">
-                    <a href="#" class="btn-outline px-10 py-4 text-xs font-bold uppercase tracking-widest">Instagram</a>
-                    <a href="#" class="btn-solid px-10 py-4 text-xs font-bold uppercase tracking-widest">Listen to</a>
-                </div>
-            </div>
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div id="progress-bar"></div>
         </div>
     </section>
 
@@ -207,5 +310,103 @@
         <p class="text-white/20 text-xs uppercase tracking-[0.5em]">&copy; 2025 Soundbubble Collective</p>
     </footer>
 
+    <script>
+        // --- Carousel Logic with Progress Bar ---
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-item');
+        const totalSlides = slides.length;
+        const progressBar = document.getElementById('progress-bar');
+        const slideDuration = 6000; // 6 seconds
+        let startTime = Date.now();
+        let slideInterval;
+        let animationFrame;
+
+        function updateProgress() {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / slideDuration) * 100, 100);
+            progressBar.style.width = progress + '%';
+
+            if (progress >= 100) {
+                nextSlide();
+            } else {
+                animationFrame = requestAnimationFrame(updateProgress);
+            }
+        }
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            currentSlide = index;
+            if (currentSlide >= totalSlides) currentSlide = 0;
+            if (currentSlide < 0) currentSlide = totalSlides - 1;
+            slides[currentSlide].classList.add('active');
+            
+            // Reset progress tracking
+            startTime = Date.now();
+            cancelAnimationFrame(animationFrame);
+            updateProgress();
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Initialize progress
+        updateProgress();
+
+        // --- Cinematic JS Movie Track (Slow Drift & Manual Drag) ---
+        const slider = document.getElementById('drag-container');
+        const wrapper = document.getElementById('scroll-wrapper');
+        
+        let isDown = false;
+        let startX;
+        let scrollPos = 0;
+        let driftSpeed = 0.4; 
+        let isHovered = false;
+
+        function updateTrackAnimation() {
+            if (!isDown && !isHovered) {
+                scrollPos -= driftSpeed;
+            }
+
+            const contentWidth = slider.scrollWidth / 2;
+            
+            if (Math.abs(scrollPos) >= contentWidth) {
+                scrollPos = 0;
+            } else if (scrollPos > 0) {
+                scrollPos = -contentWidth;
+            }
+
+            slider.style.transform = `translateX(${scrollPos}px)`;
+            requestAnimationFrame(updateTrackAnimation);
+        }
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX;
+            slider.style.transition = 'none';
+        });
+
+        window.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.transition = 'transform 0.1s ease-out';
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            const x = e.pageX;
+            const walk = (x - startX);
+            startX = x;
+            scrollPos += walk;
+        });
+
+        wrapper.addEventListener('mouseenter', () => isHovered = true);
+        wrapper.addEventListener('mouseleave', () => isHovered = false);
+
+        requestAnimationFrame(updateTrackAnimation);
+    </script>
 </body>
 </html>
