@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News | Soundbubble Collective</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
 
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .news-card {
+            background: #111;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer;
+        }
+        .news-card:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-8px);
+        }
+        .news-card img {
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+        }
+        .news-card:hover img {
+            filter: grayscale(0%);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-grid > div {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigacija -->
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl font-black tracking-tighter uppercase">Soundbubble</a>
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <li><a href="index.html" class="nav-link">Artists</a></li>
+                <li><a href="index.html#shop" class="nav-link">Shop</a></li>
+                <li><a href="news.html" class="nav-link text-white underline decoration-1 underline-offset-8">News</a></li>
+                <li><a href="gigs.html" class="nav-link">Gigs</a></li>
+                <li><a href="#" class="nav-link">Radio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-24 pb-32">
+        <!-- Header -->
+        <header class="mb-20">
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter uppercase mb-6 leading-none">News</h1>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-t border-white/10 pt-8">
+                <p class="text-white/50 text-xl font-light italic max-w-xl">
+                    Najnovije objave i vesti iz Soundbubble kuhinje.
+                </p>
+                <div class="flex gap-2">
+                    <span class="px-4 py-1 bg-white text-black text-[9px] font-black uppercase tracking-widest">Sve Vesti</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- News Grid -->
+        <div id="news-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-grid">
+            <!-- Dinamički sadržaj -->
+        </div>
+    </main>
+
+    <footer class="py-20 text-center border-t border-white/10 opacity-30 mt-20">
+        <p class="text-[10px] uppercase tracking-[0.5em]">&copy; 2025 Soundbubble Collective</p>
+    </footer>
+
+    <script>
+        const articlesData = [
+            {
+                id: 'stiff-tour',
+                title: "Stiff Buscemi najavljuje regionalnu turneju",
+                date: "14. MART 2025",
+                category: "Turneja",
+                thumbnail: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&w=800&q=80",
+                excerpt: "Stiff kreće na put. Datumi obuhvataju Atinu, Skoplje, Solun i Jagodinu."
+            },
+            {
+                id: 'jimmy-new-album',
+                title: "Jimmy Fitz - tour",
+                date: "20. FEB 2025",
+                category: "Vesti",
+                thumbnail: "",
+                excerpt: "Nakon serije uspešnih nastupa, bend se povlači u Soundbubble studio radi snimanja novog materijala."
+            },
+            {
+                id: 'sekvoya-session',
+                title: "Sekvoya predstavlja svoj prvi video iz live sessiona u MSUV",
+                date: "01. MART 2025",
+                category: "LIVE SESSION",
+                thumbnail: "https://i.imgur.com/ztrPLRg.jpeg",
+                excerpt: "Novosadski psihodelični sastav objavljuje prvi video iz live sessiona snimljen u specifičnom ambijentu muzeja..."
+            }
+        ];
+
+        function renderNews() {
+            const container = document.getElementById('news-container');
+            container.innerHTML = articlesData.map((art, index) => `
+                <div class="news-card flex flex-col h-full overflow-hidden" style="animation-delay: ${index * 0.15}s">
+                    <div class="aspect-video overflow-hidden">
+                        <img src="${art.thumbnail}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-8 flex flex-col flex-1">
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="text-[9px] font-black uppercase tracking-widest bg-white text-black px-2 py-0.5">${art.category}</span>
+                            <span class="text-[9px] font-bold uppercase tracking-widest text-white/30">${art.date}</span>
+                        </div>
+                        <h3 class="text-2xl font-black uppercase tracking-tighter mb-4 leading-tight group-hover:text-white/80 transition-colors">
+                            ${art.title}
+                        </h3>
+                        <p class="text-white/50 text-sm font-light leading-relaxed flex-1 mb-8 italic">
+                            "${art.excerpt}"
+                        </p>
+                        <a href="#" class="text-[10px] font-bold uppercase tracking-widest border-b border-white/20 pb-1 w-fit hover:border-white transition-colors">
+                            Pročitaj više →
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', renderNews);
+    </script>
+</body>
+</html>
