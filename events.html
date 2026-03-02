@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gigs | Soundbubble Collective</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .gig-row {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .gig-row:hover {
+            background: rgba(255,255,255,0.03);
+            border-bottom-color: rgba(255,255,255,0.3);
+            transform: translateX(10px);
+        }
+
+        .date-badge {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-list > div {
+            animation: slideIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigacija -->
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl font-black tracking-tighter uppercase">Soundbubble</a>
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <li><a href="index.html" class="nav-link">Artists</a></li>
+                <li><a href="index.html#shop" class="nav-link">Shop</a></li>
+                <li><a href="index.html#news" class="nav-link">News</a></li>
+                <li><a href="gigs.html" class="nav-link text-white underline decoration-1 underline-offset-8">Gigs</a></li>
+                <li><a href="#" class="nav-link">Radio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-24 pb-32">
+        <!-- Header -->
+        <header class="mb-20">
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter uppercase mb-6 leading-none">Gigs</h1>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-t border-white/10 pt-8">
+                <p class="text-white/50 text-xl font-light italic max-w-xl">
+                    Live nastupi, turneje i događaji našeg kolektiva. Pronađite sledeću stanicu zvuka.
+                </p>
+                <div class="flex gap-4">
+                    <button class="px-6 py-2 bg-white text-black text-[10px] font-bold uppercase tracking-widest hover:bg-white/90 transition-colors">Svi Događaji</button>
+                    <button class="px-6 py-2 border border-white/20 text-[10px] font-bold uppercase tracking-widest hover:border-white transition-colors">Arhiva</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Gig List -->
+        <div id="gigs-container" class="animate-list">
+            <!-- Dinamički generisan sadržaj -->
+        </div>
+
+        <!-- Newsletter / Contact Prompt -->
+        <section class="mt-40 p-12 bg-[#111] border border-white/5 text-center">
+            <h2 class="text-2xl font-black uppercase tracking-tighter mb-4">Želiš booking naših umetnika?</h2>
+            <p class="text-white/40 text-sm mb-8 uppercase tracking-widest">Kontaktiraj nas direktno za organizaciju nastupa.</p>
+            <a href="mailto:office@soundbubble.rs" class="inline-block border-b border-white hover:text-white/60 transition-colors pb-1 text-sm font-bold uppercase tracking-widest">Kontaktiraj kolektiv</a>
+        </section>
+    </main>
+
+    <footer class="py-20 text-center border-t border-white/10 opacity-30 mt-20">
+        <p class="text-[10px] uppercase tracking-[0.5em]">&copy; 2025 Soundbubble Collective</p>
+    </footer>
+
+    <script>
+        const eventsData = [
+            {
+                "artist": "Zubi",
+                "venue": "CK 13",
+                "city": "Novi Sad",
+                "day": "15",
+                "month": "MART",
+                "year": "2025",
+                "note": "hardcore still gives",
+                "ticketLink": "#"
+            },
+            {
+                "artist": "Black Dot",
+                "venue": "CK 13",
+                "city": "Novi Sad",
+                "day": "22",
+                "month": "MART",
+                "year": "2025",
+                "note": "w/ Northern Revival",
+                "ticketLink": "#"
+            },
+            {
+                "artist": "Stiff Buscemi",
+                "venue": "CK 13",
+                "city": "Novi Sad",
+                "day": "05",
+                "month": "APRIL",
+                "year": "2025",
+                "note": "w/ The Cyclist Conspiracy",
+                "ticketLink": "#"
+            }
+        ];
+
+        function renderGigs() {
+            const container = document.getElementById('gigs-container');
+            container.innerHTML = eventsData.map((event, index) => `
+                <div class="gig-row flex flex-col md:flex-row md:items-center justify-between py-12 px-4" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-center gap-8 mb-6 md:mb-0">
+                        <div class="date-badge flex flex-col items-center min-w-[60px]">
+                            <span class="text-4xl">${event.day}</span>
+                            <span class="text-[10px] text-white/40 tracking-[0.3em] mt-1">${event.month}</span>
+                        </div>
+                        <div class="h-12 w-[1px] bg-white/10 hidden md:block"></div>
+                        <div>
+                            <h3 class="text-3xl md:text-5xl font-black uppercase tracking-tighter leading-tight">${event.artist}</h3>
+                            <p class="text-white/40 text-xs uppercase tracking-[0.2em] mt-2">${event.note}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between md:gap-20">
+                        <div class="text-left md:text-right">
+                            <p class="text-lg font-bold uppercase tracking-widest">${event.venue}</p>
+                            <p class="text-[10px] text-white/40 uppercase tracking-[0.3em] font-medium">${event.city}</p>
+                        </div>
+                        <a href="${event.ticketLink}" class="bg-white text-black hover:bg-white/80 transition-all px-8 py-3 text-[10px] font-black uppercase tracking-widest shadow-xl text-center min-w-[120px]">Event</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', renderGigs);
+    </script>
+</body>
+</html>
