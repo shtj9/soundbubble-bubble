@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Associates | Soundbubble Collective</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .tech-section {
+            border-left: 1px solid rgba(255,255,255,0.1);
+            padding-left: 2rem;
+        }
+
+        .associate-row {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+        .associate-row:hover {
+            border-bottom-color: rgba(255,255,255,0.3);
+        }
+
+        .img-container {
+            filter: grayscale(100%);
+            transition: all 0.5s ease;
+            opacity: 0.7;
+        }
+        .associate-row:hover .img-container {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-content {
+            animation: fadeIn 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigacija -->
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl font-black tracking-tighter uppercase">Soundbubble</a>
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <li><a href="index.html" class="nav-link">Artists</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="news.html" class="nav-link">News</a></li>
+                <li><a href="gigs.html" class="nav-link">Gigs</a></li>
+                <li><a href="associates.html" class="nav-link text-white underline decoration-1 underline-offset-8">Associates</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-24 pb-32 animate-content">
+        <!-- Header -->
+        <header class="mb-32">
+            <h1 class="text-6xl md:text-8xl font-black tracking-tighter uppercase mb-8 leading-none">The<br>Associates</h1>
+            <p class="text-white/40 text-sm uppercase tracking-[0.5em] font-bold">Soundbubble Technical Network</p>
+        </header>
+
+        <!-- Technical Associates -->
+        <div class="tech-section">
+            <h2 class="text-[10px] uppercase tracking-[0.4em] font-black text-white/20 mb-16 italic underline underline-offset-8">Technical Associates</h2>
+            
+            <!-- SVEL Entry -->
+            <div class="associate-row group py-12 flex flex-col lg:flex-row gap-12 lg:items-center">
+                <div class="lg:w-1/3">
+                    <div class="img-container border border-white/5 overflow-hidden">
+                        <img src="https://i.imgur.com/Y8oIZnc.jpeg" class="w-full h-auto object-cover" alt="SVEL Handmade Guitar Effects">
+                    </div>
+                </div>
+                <div class="lg:w-2/3">
+                    <h3 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4">SVEL Handmade Guitar Effects</h3>
+                    <p class="text-white/50 text-lg font-light mb-8 max-w-xl italic">
+                        Follow SVEL
+                    </p>
+                    <div class="flex items-center gap-8">
+                        <a href="#" class="text-[10px] font-black uppercase tracking-[0.3em] bg-white text-black px-6 py-3 hover:bg-white/80 transition-all">Instagram</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sonic Wars Entry -->
+            <div class="associate-row group py-12 flex flex-col lg:flex-row gap-12 lg:items-center">
+                <div class="lg:w-1/3">
+                    <div class="img-container aspect-video bg-[#111] flex items-center justify-center border border-white/5">
+                        <span class="text-2xl font-black opacity-10 tracking-widest uppercase italic">Sonic Wars</span>
+                    </div>
+                </div>
+                <div class="lg:w-2/3">
+                    <h3 class="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4">Sonic Wars & events soundscapes</h3>
+                    <p class="text-white/50 text-lg font-light mb-8 max-w-xl italic">
+                        Follow Sonic Wars
+                    </p>
+                    <div class="flex items-center gap-8">
+                        <a href="#" class="text-[10px] font-black uppercase tracking-[0.3em] border border-white/20 px-6 py-3 hover:bg-white hover:text-black transition-all">Instagram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-20 text-center border-t border-white/10 opacity-10 mt-20">
+        <p class="text-[8px] uppercase tracking-[0.8em]">&copy; Soundbubble Collective</p>
+    </footer>
+
+</body>
+</html>
