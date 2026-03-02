@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Soundbubble Collective</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+
+        .shop-card {
+            background: #0f0f0f;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+        .shop-card:hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+        .product-image {
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+        .shop-card:hover .product-image {
+            filter: grayscale(0%);
+        }
+
+        .price-tag {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-items > div {
+            animation: fadeIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Navigacija -->
+    <nav class="sticky top-0 z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-xl font-black tracking-tighter uppercase">Soundbubble</a>
+            <ul class="hidden md:flex space-x-8 text-xs font-bold uppercase tracking-widest text-white/70">
+                <li><a href="index.html" class="nav-link">Artists</a></li>
+                <li><a href="shop.html" class="nav-link text-white underline decoration-1 underline-offset-8">Shop</a></li>
+                <li><a href="news.html" class="nav-link">News</a></li>
+                <li><a href="gigs.html" class="nav-link">Gigs</a></li>
+                <li><a href="#" class="nav-link">Radio</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-6 pt-24 pb-32">
+        <!-- Header -->
+        <header class="mb-20">
+            <h1 class="text-7xl md:text-9xl font-black tracking-tighter uppercase mb-6 leading-none">Shop</h1>
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-t border-white/10 pt-8">
+                <p class="text-white/50 text-xl font-light italic max-w-xl">
+                    Podrži scenu. Zvanična izdanja i odeća našeg kolektiva.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-4 py-1 bg-white text-black text-[9px] font-black uppercase tracking-widest cursor-pointer">Sve</span>
+                    <span class="px-4 py-1 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white cursor-pointer transition-colors">Majice</span>
+                    <span class="px-4 py-1 border border-white/10 text-[9px] font-black uppercase tracking-widest text-white/40 hover:text-white cursor-pointer transition-colors">Čarape</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Product Grid -->
+        <div id="shop-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 animate-items">
+            <!-- Dinamički sadržaj (Majice i Čarape) -->
+        </div>
+    </main>
+
+    <footer class="py-20 text-center border-t border-white/10 opacity-30 mt-20">
+        <p class="text-[10px] uppercase tracking-[0.5em]">&copy; 2025 Soundbubble Collective</p>
+    </footer>
+
+    <script>
+        const productsData = [
+            {
+                id: 1,
+                name: "Stiff Buscemi T-Shirt",
+                category: "MAJICE",
+                price: "2.000 RSD",
+                image: "https://i.imgur.com/5eyywOB.jpeg",
+                status: "INSTOCK"
+            },
+            {
+                id: 2,
+                name: "ZUBI - Niko ne mora",
+                category: "ČARAPE",
+                price: "1.200 RSD",
+                image: "https://i.imgur.com/2SyFs9N.jpeg",
+                status: "INSTOCK"
+            }
+        ];
+
+        function renderShop() {
+            const container = document.getElementById('shop-container');
+            container.innerHTML = productsData.map((prod, index) => `
+                <div class="shop-card flex flex-col h-full group" style="animation-delay: ${index * 0.1}s">
+                    <div class="aspect-square overflow-hidden relative bg-[#111]">
+                        <img src="${prod.image}" class="product-image w-full h-full object-cover" alt="">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <button class="bg-white text-black px-6 py-2 text-[10px] font-black uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform">Dodaj u korpu</button>
+                        </div>
+                    </div>
+                    <div class="p-8 flex flex-col flex-1">
+                        <span class="text-[9px] font-bold uppercase tracking-[0.2em] text-white/30 mb-2">${prod.category}</span>
+                        <h3 class="text-2xl font-black uppercase tracking-tighter leading-tight mb-4 flex-1">
+                            ${prod.name}
+                        </h3>
+                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+                            <span class="price-tag text-lg">${prod.price}</span>
+                            <span class="text-[10px] uppercase font-bold text-white/40 hover:text-white transition-colors cursor-pointer italic">Detalji</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', renderShop);
+    </script>
+</body>
+</html>
